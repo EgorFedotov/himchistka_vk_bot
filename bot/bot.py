@@ -3,12 +3,14 @@ import os
 from vkbottle import (Keyboard, KeyboardButtonColor,
                       Text, OpenLink,
                       EMPTY_KEYBOARD)
+from vkbottle import API
 from vkbottle.bot import Bot, Message
 from dotenv import load_dotenv
 
 load_dotenv()
 
-bot = Bot(token=os.getenv("GROUP_TOKEN"))
+api = API(token=os.getenv("GROUP_TOKEN"))
+bot = Bot(api=api)
 
 
 @bot.on.message(text="Привет")
