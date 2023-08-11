@@ -1,20 +1,9 @@
-import os
-
 from vkbottle import (Keyboard, KeyboardButtonColor,
                       Text, OpenLink,
                       EMPTY_KEYBOARD)
-from vkbottle.bot import Bot, Message
-from dotenv import load_dotenv
+from vkbottle.bot import Message
 
-load_dotenv()
-
-bot = Bot(token=os.getenv("GROUP_TOKEN"))
-
-
-@bot.on.message(text="Привет")
-async def sey_hellow(message: Message):
-    user = bot.api.users.get(message.from_id)
-    await message.answer("Привет, {}".format(user[0].first_name))
+from bot import bot
 
 
 @bot.on.private_message(text="menu")
@@ -27,5 +16,3 @@ async def handler_menu(message: Message):
     keyboard.add(Text("Кресло"), color=KeyboardButtonColor.PRIMARY)
     keyboard.add(Text("Стул"), color=KeyboardButtonColor.PRIMARY)
     await message.answer("Клавиатура", keyboard=keyboard)
-
-bot.run_forever()
