@@ -1,11 +1,12 @@
 import os
 from vkbottle.bot import Bot, Message
 from vkbottle import (
+        GroupEventType,
+        GroupTypes,
         Keyboard,
         KeyboardButtonColor,
         Text,
-        OpenLink,
-        Location,
+        VKAPIError,
         template_gen,
         TemplateElement
     )
@@ -74,6 +75,30 @@ async def carousel_handler(message: Message):
         )
     )
     await message.answer("Carousel", template=carousel)
+
+
+@bot.on.raw_event(GroupEventType.GROUP_JOIN, dataclass=GroupTypes.GroupJoin)
+async def group_join_handler(event: GroupTypes.GroupJoin):
+    try:
+        await bot.api.messages.send(
+            peer_id=event.object.user_id,
+            message="Задавайте! Мы рады что вы обратились именно к нам 😊 С удовольствием ответим на все интересующие вас вопросы. Присылайте фото мебели по возможности. Мы рассчитаем точную стоимость чистки.",
+            random_id=0
+            )
+    except VKAPIError[901]:
+        pass
+
+
+@bot.on.raw_event(GroupEventType.GROUP_LEAVE, dataclass=GroupTypes.GroupLeave)
+async def group_leave_handler(event: GroupTypes.GroupLeave):
+    try:
+        await bot.api.messages.send(
+            peer_id=event.object.user_id,
+            message="So sorry...",
+            random_id=0
+            )
+    except VKAPIError[901]:
+        pass
 
 
 bot.run_forever()
