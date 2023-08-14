@@ -1,8 +1,6 @@
 import os
 
-from vkbottle import (Keyboard, KeyboardButtonColor,
-                      Text, OpenLink,
-                      EMPTY_KEYBOARD)
+from vkbottle import Keyboard, KeyboardButtonColor, Text
 from vkbottle import API
 from vkbottle.bot import Bot, Message
 from dotenv import load_dotenv
